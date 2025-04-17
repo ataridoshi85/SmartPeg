@@ -1,0 +1,144 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\views\\home\\result.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\views\\home\\result.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|c:\\users\\kanou\\dropbox\\pc\\documents\\cprojects\\reviewanalysis\\reviewanalysis\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{20B66A5B-DBEC-40B1-ADCC-95C5C3DE2DE4}|ReviewAnalysis\\ReviewAnalysis.csproj|solutionrelative:reviewanalysis\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 210,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "ReviewAnalysis\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAYwC4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-04-15T10:40:33.022Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "ReviewAnalysis\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-15T08:57:34.852Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Result.cshtml",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Home\\Result.cshtml",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\Views\\Home\\Result.cshtml",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Home\\Result.cshtml",
+              "RelativeToolTip": "ReviewAnalysis\\Views\\Home\\Result.cshtml",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAABUAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T15:17:43.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Program.cs",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\Program.cs",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Program.cs",
+              "RelativeToolTip": "ReviewAnalysis\\Program.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAEMAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T14:32:20.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "ReviewAnalysis\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwBwBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T14:26:04.777Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "ReviewAnalysis\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAqwHMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-14T14:25:30.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\appsettings.json",
+              "RelativeDocumentMoniker": "ReviewAnalysis\\appsettings.json",
+              "ToolTip": "C:\\Users\\kanou\\Dropbox\\PC\\Documents\\Cprojects\\ReviewAnalysis\\ReviewAnalysis\\appsettings.json",
+              "RelativeToolTip": "ReviewAnalysis\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-14T14:01:27.784Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Company Reviews Analysis";
+}
+
+<header>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+            .loading::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 2rem;
+                height: 2rem;
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #3498db;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                transform: translate(-50%, -50%);
+            }
+
+        .upload-section {
+            position: relative;
+            min-height: 150px;
+        }
+
+        .upload-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+            .upload-overlay.active {
+                display: flex;
+            }
+
+        .upload-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #3498db;
+        }
+    </style>
+</header>
+
+<div class="container">
+    <div id="uploadOverlay" class="upload-overlay">
+        <div class="loading"></div>
+        <div class="upload-message">Analyzing your document...</div>
+    </div>
+
+    <h1 class="display-4 mb-4">Company Reviews Analysis</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body upload-section">
+                    <h5 class="card-title">Upload Reviews</h5>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="AnalyzeReviews">
+                        <div class="mb-3">
+                            <input type="file" class="form-control" name="excelFile" accept=".xlsx,.xls" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Analyze Reviews</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Rest of your existing cards and content... -->
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div id="reviewChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Your existing chart-related code...
+
+        // Add this new code for handling file upload
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            const fileInput = this.querySelector('input[type="file"]');
+            if (fileInput.files.length > 0) {
+                document.getElementById('uploadOverlay').classList.add('active');
+            }
+        });
+    </script>
+}
