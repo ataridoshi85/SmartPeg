@@ -1,0 +1,497 @@
+﻿@using System.Text.Json
+@{
+    ViewData["Title"] = "Analysis Results";
+}
+
+<header>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        @@-webkit-keyframes spin {
+            0% {
+                -webkit-transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @@-moz-keyframes spin {
+            0% {
+                -moz-transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                -moz-transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+            .loading::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 2rem;
+                height: 2rem;
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #3498db;
+                border-radius: 50%;
+                -webkit-animation: spin 1s linear infinite;
+                -moz-animation: spin 1s linear infinite;
+                animation: spin 1s linear infinite;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+        .filter-section {
+            transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+        }
+
+        /* Loading overlay styles */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Card and section styles */
+        .card {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+            .card:hover {
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        #chartSection, #summarySection {
+            position: relative;
+            min-height: 200px;
+        }
+
+        /* AI Panel Styles */
+        .ai-panel {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+            .ai-panel textarea {
+                width: 100%;
+                height: 100px;
+                margin-bottom: 10px;
+                padding: 10px;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+            }
+
+            .ai-panel .response {
+                margin-top: 10px;
+                padding: 15px;
+                border-radius: 5px;
+                background-color: #f8f9fa;
+                min-height: 50px;
+            }
+
+                .ai-panel .response.loading-response {
+                    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"%3E%3Cpath stroke="none" d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="%23e15b64" transform="rotate(35.4152 50 51)"%3E%3CanimateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 51;360 50 51" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"%3E%3C/animateTransform%3E%3C/path%3E%3C/svg%3E');
+                    background-repeat: no-repeat;
+                    background-position: center left 10px;
+                    background-size: 20px;
+                    padding-left: 40px;
+                }
+
+                .ai-panel .response.error {
+                    background-color: #f8d7da;
+                    color: #721c24;
+                    border: 1px solid #f5c6cb;
+                }
+
+                .ai-panel .response.warning {
+                    background-color: #fff3cd;
+                    color: #856404;
+                    border: 1px solid #ffeeba;
+                }
+
+                /* Markdown styles for AI response */
+                .ai-panel .response ul,
+                .ai-panel .response ol {
+                    padding-left: 20px;
+                }
+
+                .ai-panel .response code {
+                    background-color: #f0f0f0;
+                    padding: 2px 4px;
+                    border-radius: 3px;
+                    font-family: monospace;
+                }
+
+                .ai-panel .response pre {
+                    background-color: #f5f5f5;
+                    padding: 10px;
+                    border-radius: 5px;
+                    overflow-x: auto;
+                }
+
+                .ai-panel .response blockquote {
+                    border-left: 3px solid #ccc;
+                    margin: 0;
+                    padding-left: 15px;
+                    color: #777;
+                }
+
+                .ai-panel .response h1,
+                .ai-panel .response h2,
+                .ai-panel .response h3,
+                .ai-panel .response h4,
+                .ai-panel .response h5,
+                .ai-panel .response h6 {
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                }
+
+                .ai-panel .response p {
+                    margin-bottom: 10px;
+                }
+
+                .ai-panel .response strong {
+                    font-weight: bold;
+                }
+
+                .ai-panel .response em {
+                    font-style: italic;
+                }
+
+                .ai-panel .response img {
+                    max-width: 100%;
+                }
+    </style>
+</header>
+
+<div class="container mt-4">
+    <h1 class="display-4 mb-4">Analysis Results</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 filter-section">
+                <div class="card-body">
+                    <h5 class="card-title">Filtri</h5>
+                    <form id="filterForm" onsubmit="return false;">
+                        <div class="mb-3">
+                            <label class="form-label">Area Aziendale</label>
+                            <select class="form-select" id="areaFilter">
+                                <option value="">Tutte le aree</option>
+                                @foreach (var area in ViewBag.Areas)
+                                {
+                                    <option value="@area">@area</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Anzianità Lavorativa</label>
+                            <select class="form-select" id="anzianitaFilter">
+                                <option value="">Tutte le anzianità</option>
+                                @foreach (var anzianita in ViewBag.Anzianita)
+                                {
+                                    <option value="@anzianita">@anzianita</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Età Anagrafica</label>
+                            <select class="form-select" id="etaFilter">
+                                <option value="">Tutte le età</option>
+                                @foreach (var eta in ViewBag.Eta)
+                                {
+                                    <option value="@eta">@eta</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="resetFilters()">
+                            Reset Filters
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body" id="summarySection">
+                    <h5 class="card-title">Analysis Summary</h5>
+                    <div id="analysisSummary">
+                        @Html.Raw(ViewBag.Deductions)
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <a href="@Url.Action("Index")" class="btn btn-primary">
+                    Analyze Another File
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-body" id="chartSection">
+                    <div id="reviewChart"></div>
+                </div>
+            </div>
+
+            <!-- AI Panel for document-based questions -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="ai-panel">
+                        <h5 class="card-title">Fai domande riguardo le recensioni</h5>
+                        <p class="text-muted">Fai domande sulle recensioni caricate ed ottieni risposte potenziate da IA</p>
+                        <form id="aiForm">
+                            <textarea id="question" name="question" placeholder="e.g., 'Quali sono le principale sollecitudini in dipartimento Marketing?' or 'Riassumi gli aspetti più positivi dei vari dipartimenti'" required></textarea>
+                            <button type="submit" class="btn btn-primary">Ask</button>
+                        </form>
+                        <div id="aiResponse" class="response mt-3">
+                            Chiedimi qualunque cosa riguardo le recensioni caricate per ricevere insights.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let chart = null;
+        let debounceTimer;
+        let reviewsData = null;
+
+        // Initialize reviews data
+        function initReviewsData() {
+            if (!reviewsData) {
+                // Get the data from TempData
+                reviewsData = @Html.Raw(JsonSerializer.Serialize(
+            JsonSerializer.Deserialize<List<ReviewData>>(TempData["Reviews"].ToString())
+        ));
+        @{
+            TempData.Keep("Reviews");
+        }
+            }
+        }
+
+        function updateChart(chartData, categories) {
+            const options = {
+                series: [{
+                    name: 'Sentiment Score',
+                    data: chartData
+                }],
+                chart: {
+                    type: 'radar',
+                    height: 600,
+                    toolbar: {
+                        show: true
+                    }
+                },
+                title: {
+                    text: 'Review Analysis per Categoria',
+                    align: 'center'
+                },
+                xaxis: {
+                    categories: categories
+                },
+                yaxis: {
+                    show: true,
+                    tickAmount: 5,
+                    min: 0,
+                    max: 1,
+                    labels: {
+                        formatter: function(val) {
+                            return (val * 100).toFixed(0) + '%';
+                        }
+                    }
+                },
+                markers: {
+                    size: 5
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return (val * 100).toFixed(1) + '%';
+                        }
+                    }
+                }
+            };
+
+            if (chart) {
+                chart.destroy();
+            }
+            chart = new ApexCharts(document.querySelector("#reviewChart"), options);
+            chart.render();
+        }
+
+        function setLoading(isLoading) {
+            const sections = ['chartSection', 'summarySection'];
+            sections.forEach(id => {
+                const element = document.getElementById(id);
+                if (isLoading) {
+                    element.classList.add('loading');
+                } else {
+                    element.classList.remove('loading');
+                }
+            });
+        }
+
+        function debounce(func, delay) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(func, delay);
+        }
+
+        function applyFilters() {
+            setLoading(true);
+
+            const area = document.getElementById('areaFilter').value;
+            const anzianita = document.getElementById('anzianitaFilter').value;
+            const eta = document.getElementById('etaFilter').value;
+
+            debounce(() => {
+                fetch(`/Home/FilterResults?area=${encodeURIComponent(area)}&anzianita=${encodeURIComponent(anzianita)}&eta=${encodeURIComponent(eta)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error(data.error);
+                            return;
+                        }
+                        updateChart(data.chartData.split(',').map(Number), JSON.parse(data.categories));
+                        document.getElementById('analysisSummary').innerHTML = data.deductions;
+                    })
+                    .catch(error => console.error('Error:', error))
+                    .finally(() => {
+                        setLoading(false);
+                    });
+            }, 300);
+        }
+
+        function resetFilters() {
+            document.getElementById('filterForm').reset();
+            applyFilters();
+        }
+
+        // AI form event handler
+        document.getElementById('aiForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const question = document.getElementById('question').value;
+            const responseDiv = document.getElementById('aiResponse');
+
+            responseDiv.textContent = "Thinking...";
+            responseDiv.classList.remove('error', 'warning');
+            responseDiv.classList.add('loading-response');
+
+            try {
+                console.log("Sending request to server with question:", question);
+
+                // Initialize reviews data if not already done
+                initReviewsData();
+
+                // Get current filter values
+                const area = document.getElementById('areaFilter').value;
+                const anzianita = document.getElementById('anzianitaFilter').value;
+                const eta = document.getElementById('etaFilter').value;
+
+                const response = await fetch('/Home/AskDocumentQuestion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: question,
+                        area: area,
+                        anzianita: anzianita,
+                        eta: eta
+                    })
+                });
+
+                console.log("Received response with status:", response.status);
+
+                // Check if the response is OK
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Server error:", errorText);
+                    responseDiv.textContent = `Error: ${response.status} - ${response.statusText}`;
+                    responseDiv.classList.add('error');
+                    responseDiv.classList.remove('loading-response');
+                    return;
+                }
+
+                // Try to parse as JSON
+                let data;
+                const responseText = await response.text();
+                console.log("Raw response:", responseText);
+
+                try {
+                    data = JSON.parse(responseText);
+                    console.log("Parsed JSON data:", data);
+                } catch (parseError) {
+                    console.error("JSON parse error:", parseError);
+                    responseDiv.textContent = "Failed to parse response from server.";
+                    responseDiv.classList.add('error');
+                    responseDiv.classList.remove('loading-response');
+                    return;
+                }
+
+                // Display the answer
+                if (data && data.answer) {
+                    console.log("Found answer:", data.answer);
+                    // Use marked.js to parse Markdown into HTML
+                    responseDiv.innerHTML = marked.parse(data.answer);
+                } else if (data && data.error) {
+                    console.error("Error in response:", data.error);
+                    responseDiv.textContent = `Error: ${data.error}`;
+                    responseDiv.classList.add('error');
+                } else {
+                    console.error("No answer or error in response:", data);
+                    responseDiv.textContent = "No answer could be generated.";
+                    responseDiv.classList.add('warning');
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                responseDiv.textContent = `An error occurred: ${error.message}`;
+                responseDiv.classList.add('error');
+            } finally {
+                responseDiv.classList.remove('loading-response');
+            }
+        });
+
+        // Initial chart render
+        updateChart([@Html.Raw(ViewBag.ChartData)], @Html.Raw(ViewBag.Categories));
+
+        // Add event listeners to filters
+        ['areaFilter', 'anzianitaFilter', 'etaFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', applyFilters);
+        });
+    </script>
+}

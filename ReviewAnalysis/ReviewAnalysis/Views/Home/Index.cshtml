@@ -1,0 +1,249 @@
+﻿@{
+    ViewData["Title"] = "Company Reviews Analysis";
+}
+
+<header>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+            .loading::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 2rem;
+                height: 2rem;
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #3498db;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                transform: translate(-50%, -50%);
+            }
+
+        .upload-section {
+            position: relative;
+            min-height: 150px;
+        }
+
+        .upload-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+            .upload-overlay.active {
+                display: flex;
+            }
+
+        .upload-message {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #3498db;
+        }
+    </style>
+</header>
+
+<div class="container">
+    <div id="uploadOverlay" class="upload-overlay">
+        <div class="loading"></div>
+        <div class="upload-message">Analyzing your document...</div>
+    </div>
+
+    <h1 class="display-4 mb-4">Company Reviews Analysis</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body upload-section">
+                    <h5 class="card-title">Upload Reviews</h5>
+                    <form id="uploadForm" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="AnalyzeReviews">
+                        <div class="mb-3">
+                            <input type="file" class="form-control" name="excelFile" accept=".xlsx,.xls" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Analyze Reviews</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Rest of your existing cards and content... -->
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <div id="reviewChart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ai-panel">
+    <h3>Ask the AI</h3>
+    <form id="aiForm">
+        <textarea id="question" name="question" placeholder="Type your question here..." required></textarea>
+        <button type="submit">Ask</button>
+    </form>
+    <div id="aiResponse" class="response"></div>
+</div>
+
+
+<style>
+    .ai-panel .response ul,
+    .ai-panel .response ol {
+        padding-left: 20px;
+    }
+
+    .ai-panel .response code {
+        background-color: #f0f0f0;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-family: monospace;
+    }
+
+    .ai-panel .response pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+        overflow-x: auto;
+    }
+
+    .ai-panel .response blockquote {
+        border-left: 3px solid #ccc;
+        margin: 0;
+        padding-left: 15px;
+        color: #777;
+    }
+
+    .ai-panel .response h1,
+    .ai-panel .response h2,
+    .ai-panel .response h3,
+    .ai-panel .response h4,
+    .ai-panel .response h5,
+    .ai-panel .response h6 {
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    .ai-panel .response p {
+        margin-bottom: 10px;
+    }
+
+    .ai-panel .response strong {
+        font-weight: bold;
+    }
+
+    .ai-panel .response em {
+        font-style: italic;
+    }
+
+    .ai-panel .response img {
+        max-width: 100%;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // File upload event handler
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            const fileInput = this.querySelector('input[type="file"]');
+            if (fileInput.files.length > 0) {
+                document.getElementById('uploadOverlay').classList.add('active');
+            }
+        });
+
+        // AI form event handler
+        document.getElementById('aiForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const question = document.getElementById('question').value;
+            const responseDiv = document.getElementById('aiResponse');
+
+            responseDiv.textContent = "Thinking...";
+            responseDiv.classList.remove('error', 'warning');
+            responseDiv.classList.add('loading-response');
+
+            try {
+                console.log("Sending request to server with question:", question);
+
+                const response = await fetch('/Home/AskQuestion', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+
+                console.log("Received response with status:", response.status);
+
+                // Check if the response is OK
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Server error:", errorText);
+                    responseDiv.textContent = `Error: ${response.status} - ${response.statusText}`;
+                    responseDiv.classList.add('error');
+                    responseDiv.classList.remove('loading-response');
+                    return;
+                }
+
+                // Try to parse as JSON
+                let data;
+                const responseText = await response.text();
+                console.log("Raw response:", responseText);
+
+                try {
+                    data = JSON.parse(responseText);
+                    console.log("Parsed JSON data:", data);
+                } catch (parseError) {
+                    console.error("JSON parse error:", parseError);
+                    responseDiv.textContent = "Failed to parse response from server.";
+                    responseDiv.classList.add('error');
+                    responseDiv.classList.remove('loading-response');
+                    return;
+                }
+
+                // Display the answer
+                if (data && data.answer) {
+                    console.log("Found answer:", data.answer);
+                    // Use marked.js to parse Markdown into HTML
+                    responseDiv.innerHTML = marked.parse(data.answer);
+                } else if (data && data.error) {
+                    console.error("Error in response:", data.error);
+                    responseDiv.textContent = `Error: ${data.error}`;
+                    responseDiv.classList.add('error');
+                } else {
+                    console.error("No answer or error in response:", data);
+                    responseDiv.textContent = "No answer could be generated.";
+                    responseDiv.classList.add('warning');
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                responseDiv.textContent = `An error occurred: ${error.message}`;
+                responseDiv.classList.add('error');
+            } finally {
+                responseDiv.classList.remove('loading-response');
+            }
+        });
+    </script>
+}
